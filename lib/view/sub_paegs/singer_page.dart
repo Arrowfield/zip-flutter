@@ -21,12 +21,6 @@ class _SingerPageState extends State<SingerPage>
 
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  @override
-  void initState() {
-    super.initState();
-    _getUsers();
-  }
-
   List<UserItem> _singerList = UserList([]).list;
 
   int page = 1;
@@ -37,6 +31,12 @@ class _SingerPageState extends State<SingerPage>
   bool error = false;
 
   String errorMsg = "";
+
+  @override
+  void initState() {
+    super.initState();
+    _getUsers();
+  }
 
   Future _getUsers({bool push = false}) async {
     try {

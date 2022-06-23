@@ -39,6 +39,12 @@ dependencies:
   flutter_easyloading: ^2.2.0
   flutter_easyrefresh: ^2.2.1
 
+  # 懒加载的层叠组件
+  proste_indexed_stack: ^0.2.2
+
+  # 日志
+  logger: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

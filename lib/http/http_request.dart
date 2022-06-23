@@ -1,5 +1,8 @@
 // ignore_for_file: unused_element
 
+import 'dart:io';
+
+import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
 
 import 'http_interceptor.dart';
@@ -23,6 +26,16 @@ class HttpRequest {
       );
 
       dio = new Dio(baseOptions);
+
+      // (dio!.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+      //     (client) {
+      //   client.badCertificateCallback =
+      //       (X509Certificate cert, String host, int port) {
+      //     // 默认情况下，这个cert证书是网站颁发机构的证书，并不是网站证书，开发者可以验证一下
+
+      //     return true; //忽略证书校验
+      //   };
+      // };
 
       dio!.interceptors.add(HttpInterceptor());
     }

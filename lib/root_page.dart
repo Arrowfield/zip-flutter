@@ -5,6 +5,7 @@ import 'package:flutter_duuchin/view/root_pages/home_page.dart';
 import 'package:flutter_duuchin/view/root_pages/music_page.dart';
 import 'package:flutter_duuchin/view/root_pages/profile.dart';
 import 'package:flutter_duuchin/view/root_pages/tiny_video.dart';
+import 'package:proste_indexed_stack/proste_indexed_stack.dart';
 
 // 快速创建组件 state
 
@@ -27,12 +28,12 @@ class _RootPageState extends State<RootPage> {
   // 导航的索引
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    HomePage(),
-    MusicPage(),
-    Container(),
-    TinyVideoPage(),
-    ProfilePage()
+  final List<IndexedStackChild> _pages = [
+    IndexedStackChild(child: HomePage()),
+    IndexedStackChild(child: MusicPage()),
+    IndexedStackChild(child: Container()),
+    IndexedStackChild(child: TinyVideoPage()),
+    IndexedStackChild(child: ProfilePage()),
   ];
 
   // 底部导航数组
@@ -59,7 +60,12 @@ class _RootPageState extends State<RootPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       // 层叠是布局
-      body: _pages[_currentIndex], // 这种方式每次都会再次请求，销毁页面 不好
+      ///body: _pages[_currentIndex], // 这种方式每次都会再次请求，销毁页面 不好
+      ///
+      body: ProsteIndexedStack(
+        index: _currentIndex,
+        children: _pages,
+      ),
       bottomNavigationBar: BottomNavigationBar(
         items: _bottomNavBarList,
         currentIndex: _currentIndex,

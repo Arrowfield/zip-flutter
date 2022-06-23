@@ -1,6 +1,8 @@
 import 'package:flutter_duuchin/models/user_model.dart';
 
-class VideoList {
+import 'recommend_interface.dart';
+
+class VideoList implements RecommendInterface {
   final List<VideoItem> list;
   VideoList(this.list);
   factory VideoList.fromJson(List<dynamic> list) {
@@ -11,7 +13,7 @@ class VideoList {
 }
 
 //
-class VideoItem {
+class VideoItem implements RecommendInterface {
   final int id;
   final int userId;
   final UserItem user;

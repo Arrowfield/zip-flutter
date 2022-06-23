@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_duuchin/models/recommend_interface.dart';
 import 'package:flutter_duuchin/models/user_model.dart';
 
 // 歌曲列表模型
-class SongList {
+class SongList implements RecommendInterface {
   // 包含UserItem模型的集合
 
   final List<SongItem> list;
@@ -16,7 +17,7 @@ class SongList {
 }
 
 // 歌曲每一项的详情模型
-class SongItem {
+class SongItem implements RecommendInterface {
   // song
   final int id;
   final int userId;

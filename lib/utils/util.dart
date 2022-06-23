@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/cupertino.dart';
 
 // 转为rpx
@@ -28,4 +30,31 @@ formatCharCount(int count) {
   }
 
   return strCount;
+}
+
+// 随机数的获取
+int getRandomRangeInt(int min, int max) {
+  final Random random = Random();
+  return min + random.nextInt(max + 1 - min);
+}
+
+// 秒数转成 时分秒
+
+String secondToTime(int seconds) {
+  if (seconds == null || seconds <= 0 || seconds.isNaN) {
+    return "00:00";
+  }
+  int hours = 0;
+  int minutes = 0;
+  int remainingSeconds = 0;
+
+  hours = (seconds / 60 / 60).floor();
+  minutes = (seconds / 60 % 60).floor();
+  remainingSeconds = seconds % 60;
+  return '${formatNumber(hours)}:${formatNumber(minutes)}:${formatNumber(remainingSeconds)}';
+}
+
+String formatNumber(int count) {
+  String strCount = count.toString();
+  return strCount.length > 1 ? strCount : '0$strCount';
 }

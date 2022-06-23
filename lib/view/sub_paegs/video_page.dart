@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_duuchin/components/song_card.dart';
-import 'package:flutter_duuchin/log.dart';
-import 'package:flutter_duuchin/models/song_model.dart';
-import 'package:flutter_duuchin/services/song_service.dart';
 
+import 'package:flutter_duuchin/components/video_cart.dart';
+
+import 'package:flutter_duuchin/models/video_model.dart';
+
+import 'package:flutter_duuchin/services/video_service.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
-// EasyLoading
-
-class SongPage extends StatefulWidget {
-  SongPage({Key? key}) : super(key: key);
+class VideoPage extends StatefulWidget {
+  VideoPage({Key? key}) : super(key: key);
 
   @override
-  State<SongPage> createState() => _SongPageState();
+  State<VideoPage> createState() => _VideoPageState();
 }
 
-class _SongPageState extends State<SongPage>
+class _VideoPageState extends State<VideoPage>
     with AutomaticKeepAliveClientMixin {
-  // ignore: unused_field
+  // 获取数据
+
   final EasyRefreshController _easyRefreshController = EasyRefreshController();
 
-  List<SongItem> _songList = SongList([]).list;
+  List<VideoItem> _videoList = VideoList([]).list;
 
   int page = 1;
   int limit = 10;
@@ -31,40 +31,31 @@ class _SongPageState extends State<SongPage>
 
   String errorMsg = "";
 
-  // 获取数据
-
   @override
   void initState() {
     super.initState();
-
-    // 初始化下拉刷新
-
-//https://pub.dev/packages/flutter_easyrefresh
-
-    // _easyRefreshController = EasyRefreshController();
-
-    _getSongs();
+    _getVideos();
   }
 
-  Future _getSongs({bool push = false}) async {
+  Future _getVideos({bool push = false}) async {
     try {
-      // _logger.v('verbose message');
-      Log.v("song 进行初始花");
       print("开始发送请求");
-      Map<String, dynamic> result = await SongService.getSongs(page: page);
+      Map<String, dynamic> result = await VideoService.getVideos(
+        page: page,
+      );
 
-      print("获取到的数据是$result");
+      //print("获取到的数据是$result");
 
-      SongList songListModel = SongList.fromJson(result['data']);
+      VideoList VideoListModel = VideoList.fromJson(result['data']);
 
       setState(() {
         hasMore = page * limit < result['total'];
         page++;
 
         if (push) {
-          _songList.addAll(songListModel.list);
+          _videoList.addAll(VideoListModel.list);
         } else {
-          _songList = songListModel.list;
+          _videoList = VideoListModel.list;
         }
       });
     } catch (e) {
@@ -78,7 +69,7 @@ class _SongPageState extends State<SongPage>
   // 下拉刷新
   Future _onRefresh() async {
     page = 1;
-    await _getSongs();
+    await _getVideos();
     _easyRefreshController.finishRefresh();
     // 重置加载状态
     _easyRefreshController.resetLoadState();
@@ -87,7 +78,7 @@ class _SongPageState extends State<SongPage>
   // 上拉加载
   Future _onLoad() async {
     if (hasMore) {
-      await _getSongs(
+      await _getVideos(
         push: true,
       );
     }
@@ -97,7 +88,6 @@ class _SongPageState extends State<SongPage>
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return EasyRefresh(
       controller: _easyRefreshController,
       footer: ClassicalFooter(),
@@ -106,15 +96,16 @@ class _SongPageState extends State<SongPage>
       enableControlFinishLoad: true, // 手动控制
       onRefresh: _onRefresh,
       onLoad: _onLoad,
+
       child: ListView.builder(
-        itemCount: _songList.length,
+        itemCount: _videoList.length,
         itemBuilder: (BuildContext context, int index) {
           return Column(
             children: [
               SizedBox(
                 height: 8,
               ),
-              SongCard(songItem: _songList[index]),
+              VideoCard(videoItem: _videoList[index]),
             ],
           );
         },

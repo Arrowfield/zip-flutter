@@ -2,9 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_duuchin/components/root_page_head.dart';
 import 'package:flutter_duuchin/http/http.dart';
+import 'package:flutter_duuchin/view/sub_paegs/article_page.dart';
+import 'package:flutter_duuchin/view/sub_paegs/recommend_page.dart';
 import 'package:flutter_duuchin/view/sub_paegs/tiny_video_page.dart';
 import 'package:flutter_duuchin/view/sub_paegs/singer_page.dart';
 import 'package:flutter_duuchin/view/sub_paegs/song_page.dart';
+import 'package:flutter_duuchin/view/sub_paegs/video_page.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key? key}) : super(key: key);
@@ -24,11 +27,11 @@ const List<Tab> _tabs = [
 
 final List<Widget> _tabsContent = [
   SongPage(),
-  Text("1111111"),
+  RecommendPage(),
   SingerPage(),
   TinyVideoPage(),
-  Text("1111111"),
-  Text("1111111"),
+  ArticlePage(),
+  VideoPage(),
 ];
 
 class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
